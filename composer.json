@@ -1,0 +1,24 @@
+{
+    "name": "jimmy/hmif",
+    "require": {
+        "silex/silex": "~1.3",
+        "symfony/var-dumper": "^3.0",
+        "symfony/debug": "^3.0"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Jimmy\\HMiF\\": "src/"
+	}
+    },
+    "require-dev": {
+        "behat/behat": "^3.0",
+        "phpspec/phpspec": "^2.4"
+    },
+    
+    "authors": [
+        {
+            "name": "jimmy",
+            "email": "killcoder212@gmail.com"
+        }
+    ]
+}
