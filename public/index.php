@@ -6,19 +6,61 @@
  * Time: 6:09 PM
  */
 
-require_once __DIR__.'/../vendor/autoload.php';
+$loader = require __DIR__ . '/../vendor/autoload.php';
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
+$config = require __DIR__ . '/../app/config.php';
 
-$app = new Silex\Application();
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader,'loadClass'));
 
-$app['debug'] = true;
+/**
+ * new Silex\Application()
+ */
 
-$app->get('/',function(){
-    $hello = 'hello';
+$app = new Silex\Application(
+    $config['common']
+);
 
-    return $hello;
+/**
+ * Register Doctrine
+ */
+
+$app->register(new \Silex\Provider\DoctrineServiceProvider(), $config['db']);
+
+/**
+ * Register Twig for Template
+ */
+
+$app->register(new \Silex\Provider\TwigServiceProvider(), $config['twig']);
+
+/**
+ * Enable Logging
+ */
+//$app->register(new \Silex\Provider\MonologServiceProvider());
+
+/**
+ * Form Handle Service Provider
+ */
+$app->register(new \Silex\Provider\FormServiceProvider());
+
+/**
+ * URL Generator
+ */
+$app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
+
+/**
+ * Silex Service Controller
+ */
+$app->register(new \Silex\Provider\ServiceControllerServiceProvider());
+
+/**
+ * Silex Http Fragment
+ */
+$app->register(new Silex\Provider\HttpFragmentServiceProvider());
+
+$app->get('/', function () use ($app) {
+    return $app->redirect($app["url_generator"]->generate("home"));
 });
+
+$app->mount('/', new \Jimmy\HMiF\AppController($app));
+
 $app->run();

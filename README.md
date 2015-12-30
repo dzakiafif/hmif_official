@@ -1,4 +1,4 @@
-# HMIF Official Website
+# hmif_official
 
 ------------
-Source Code for website about HMiF 2016
+HMIF Official Website
