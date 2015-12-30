@@ -1,4 +1,4 @@
-# hmif_official
+# HMIF Official Website
 
 ------------
-HMIF Official Website
+## HMIF Official Website
